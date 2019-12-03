@@ -11,5 +11,5 @@ const compute = (
         setValue(state, resultIndex, operation(state[leftIndex], state[rightIndex])),
         programCounter + 4
       );
-
+module.exports = { compute };
 // manually preprocess input state by setting position 1 to 12 and 2 to 2 before beginning
