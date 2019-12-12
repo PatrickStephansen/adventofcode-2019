@@ -1,7 +1,14 @@
-import { countCandidates, getNextToCheck, isCandidate } from './4-lib.mjs';
-import { probe } from './probe.mjs';
+import {
+  countCandidates,
+  getNextToCheck,
+  isCandidate,
+  splitNumber,
+  hasRepeatingDigit,
+  neverDecrease
+} from './4-lib.mjs';
 
 const start = 124075;
 const end = 580769;
-
-console.log(countCandidates(start, end, isCandidate, n => probe('trying', getNextToCheck(n))));
+const isCandidate = n =>
+  ((digits = splitNumber(n)) => hasRepeatingDigit(digits) && neverDecrease(digits))();
+console.log(countCandidates(start, end, isCandidate, getNextToCheck));
