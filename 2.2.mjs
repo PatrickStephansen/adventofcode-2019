@@ -1,4 +1,4 @@
-const { compute } = require('./2');
+import { compute } from "./2.mjs";
 
 const initializeState = (noun, verb) => [
   1,
