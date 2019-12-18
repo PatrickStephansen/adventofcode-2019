@@ -4,3 +4,7 @@ export { readInput } from './read-input.mjs';
 export { print } from './print.mjs';
 export { halt } from './halt.mjs';
 export { runProgram } from './runtime.mjs';
+export { jumpIfTrue } from './jump-if-true.mjs';
+export { jumpIfFalse } from './jump-if-false.mjs';
+export { lessThan } from './less-than.mjs';
+export { equals } from './equals.mjs';
