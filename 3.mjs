@@ -78,10 +78,10 @@ const intersectionDistance = input => {
   );
 };
 
-// probe(
-//   'results',
-//   testCases.map(
-//     ({ input, output }) =>
-//       probe('actual distance', intersectionDistance(input)) === probe('expected distance', output)
-//   )
-// );
+probe(
+  'results',
+  testCases.map(
+    ({ input, output }) =>
+      probe('actual distance', intersectionDistance(input)) === probe('expected distance', output)
+  )
+);
