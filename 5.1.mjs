@@ -1,4 +1,5 @@
 import { add, multiply, readInput, print, halt, runProgram } from './intcode/index.mjs';
+import { indexBy } from './index-by.mjs';
 
 const inputMemory = [
   3,
