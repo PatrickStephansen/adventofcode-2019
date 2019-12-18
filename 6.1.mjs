@@ -955,17 +955,17 @@ PNN)HRG`
   }
 ];
 
-const countTreeOrbits = (tree, depth) =>
-  tree.orbitedBy.length &&
-  tree.orbitedBy.length * depth +
-    tree.orbitedBy.reduce((sum, subtree) => sum + countTreeOrbits(subtree, depth + 1), 0);
+const countSubtreeOrbits = (trees, depth) =>
+  trees.length &&
+  trees.length * depth +
+    trees.reduce((sum, subtree) => sum + countSubtreeOrbits(subtree.orbitedBy, depth + 1), 0);
 const countAllOrbits = input => {
   const orbitalRelations = parseInput(input);
   const trees = toTrees(
     getCentresOfMass(getUniqueCelestialBodies(orbitalRelations), orbitalRelations),
     orbitalRelations
   );
-  return trees.reduce((sum, tree) => sum + countTreeOrbits(tree, 1), 0);
+  return countSubtreeOrbits(trees, 0);
 };
 
 for (const testCase of cases) {
