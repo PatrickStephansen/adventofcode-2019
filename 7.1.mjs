@@ -13,6 +13,7 @@ import {
 import { indexBy } from './index-by.mjs';
 import { input as thrusterProgram } from './7-input.mjs';
 import { probe } from './probe.mjs';
+import { getPermutations } from './permutations.mjs';
 
 const instructionSet = [
   add,
@@ -27,20 +28,6 @@ const instructionSet = [
 ];
 const instructionDefinitions = indexBy('opcode', instructionSet);
 
-// assumes unique entries
-const getPermutations = set =>
-  set.length === 1
-    ? [set]
-    : set.reduce(
-        (permutations, value) => [
-          ...permutations,
-          ...getPermutations(set.filter(x => x !== value)).map(permutedRest => [
-            value,
-            ...permutedRest
-          ])
-        ],
-        []
-      );
 const phasePermutations = getPermutations([0, 1, 2, 3, 4]);
 const thrustOutputs = phasePermutations.map(phaseSettings => {
   let thrust = 0;
