@@ -41,35 +41,25 @@ const getPermutations = set =>
         ],
         []
       );
-const phasePermutations = probe('perm', getPermutations([0, 1, 2, 3, 4]));
+const phasePermutations = getPermutations([0, 1, 2, 3, 4]);
+const thrustOutputs = phasePermutations.map(phaseSettings => {
+  let thrust = 0;
+  const setThrust = value => (thrust = value);
+  for (const phase of phaseSettings) {
+    let phaseProvided = false;
+    const provideInput = () => {
+      if (phaseProvided) return thrust;
+      phaseProvided = true;
+      return phase;
+    };
 
-console.log(
-  'max thrust',
-  Math.max(
-    probe(
-      'max of',
-      ...phasePermutations.map(phaseSettings => {
-        console.log('phaseSettings', phaseSettings);
-        let thrust = 0;
-        const setThrust = value => (thrust = value);
-        for (const phase of phaseSettings) {
-          console.log('thruster phase', phase);
-          let phaseProvided = false;
-          const provideInput = () => {
-            if (phaseProvided) return thrust;
-            phaseProvided = true;
-            return phase;
-          };
-
-          runProgram({
-            memory: thrusterProgram,
-            instructionDefinitions,
-            getSystemInput: provideInput,
-            writeSystemOutput: value => setThrust(probe('setting thrust', value))
-          });
-          return thrust;
-        }
-      })
-    )
-  )
-);
+    runProgram({
+      memory: thrusterProgram,
+      instructionDefinitions,
+      getSystemInput: provideInput,
+      writeSystemOutput: setThrust
+    });
+  }
+  return thrust;
+});
+probe('max thrust', Math.max(...thrustOutputs));
