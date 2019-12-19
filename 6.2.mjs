@@ -26,14 +26,15 @@ I)SAN`,
   }
 ];
 
-// these haven't happened mid path so far
-const toFlattenedString = s => s.toString().replace(/(?:^,+)|(?:,+$)/g, '');
-
-// lazy version - leaves lots of empty arrays and nesting in the result
-const depthFirstSearch = (trees, target, path = []) =>
-  trees.map(t =>
-    t.body === target ? path : depthFirstSearch(t.orbitedBy, target, [...path, t.body])
-  );
+const pathFromCentreOfMass = (trees, target) => {
+  // lazy programmer, not evaluation - leaves lots of empty arrays and nesting in the result
+  const lazyDfs = (trees, target, path) =>
+    trees.map(t => (t.body === target ? path : lazyDfs(t.orbitedBy, target, [...path, t.body])));
+  return lazyDfs(trees, target, [])
+    .toString()
+    .split(',')
+    .filter(x => x);
+};
 
 const trimMatchingStart = (a, b) => {
   let index = 0;
@@ -41,18 +42,16 @@ const trimMatchingStart = (a, b) => {
   return [a.slice(index), b.slice(index)];
 };
 
-const getStringArrayLength = arrayAsString => arrayAsString.split(',').length;
-
 const countOrbitalTransfers = (orbitsText, start, target) => {
   const orbitalRelations = parseInput(orbitsText);
   const trees = toTrees(
     getCentresOfMass(getUniqueCelestialBodies(orbitalRelations), orbitalRelations),
     orbitalRelations
   );
-  const startPath = toFlattenedString(depthFirstSearch(trees, start));
-  const targetPath = toFlattenedString(depthFirstSearch(trees, target));
+  const startPath = pathFromCentreOfMass(trees, start);
+  const targetPath = pathFromCentreOfMass(trees, target);
   const [uniqueStartPath, uniqueTargetPath] = trimMatchingStart(startPath, targetPath);
-  return getStringArrayLength(uniqueStartPath) + getStringArrayLength(uniqueTargetPath);
+  return uniqueStartPath.length + uniqueTargetPath.length;
 };
 
 for (const testCase of cases) {
