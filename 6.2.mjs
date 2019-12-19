@@ -3,6 +3,7 @@ import { toTrees } from './orbits.mjs';
 import { getCentresOfMass } from './orbits.mjs';
 import { getUniqueCelestialBodies } from './orbits.mjs';
 import { input as input6 } from './6-input.mjs';
+import { probe } from './probe.mjs';
 
 const cases = [
   {
@@ -26,15 +27,10 @@ I)SAN`,
   }
 ];
 
-const pathFromCentreOfMass = (trees, target) => {
-  // lazy programmer, not evaluation - leaves lots of empty arrays and nesting in the result
-  const lazyDfs = (trees, target, path) =>
-    trees.map(t => (t.body === target ? path : lazyDfs(t.orbitedBy, target, [...path, t.body])));
-  return lazyDfs(trees, target, [])
-    .toString()
-    .split(',')
-    .filter(x => x);
-};
+const pathFromCentreOfMass = (trees, target, path=[]) =>
+  trees.flatMap(t =>
+    t.body === target ? path : pathFromCentreOfMass(t.orbitedBy, target, [...path, t.body])
+  );
 
 const trimMatchingStart = (a, b) => {
   let index = 0;
