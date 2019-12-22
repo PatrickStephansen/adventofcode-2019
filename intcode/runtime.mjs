@@ -5,7 +5,7 @@ const extractOpcode = instructionCode => instructionCode % 100;
 const extractParameterModes = instructionCode =>
   [...('000' + Math.floor(instructionCode / 100))].reverse().map(x => +x);
 
-export const runProgram = machineState => {
+export const runProgram = async machineState => {
   const {
     getSystemInput,
     writeSystemOutput,
@@ -20,17 +20,19 @@ export const runProgram = machineState => {
   const parametersCount = instruction.parameters;
   const parameters = memory.slice(instructionPointer + 1, instructionPointer + 1 + parametersCount);
   if (!instruction.continueExecution) {
-    return memory;
+    return Promise.resolve(memory);
   }
-  return runProgram({
+  return await runProgram({
     ...machineState,
-    ...instruction.execute(
-      memory,
-      instructionPointer,
-      parameters,
-      parameterModes,
-      getSystemInput,
-      writeSystemOutput
-    )
+    ...(await Promise.resolve(
+      instruction.execute(
+        memory,
+        instructionPointer,
+        parameters,
+        parameterModes,
+        getSystemInput,
+        writeSystemOutput
+      )
+    ))
   });
 };

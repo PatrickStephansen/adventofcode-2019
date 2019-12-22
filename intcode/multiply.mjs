@@ -1,5 +1,5 @@
-import { getParameter } from "./get-parameter.mjs";
-import { setMemory } from "./set-memory.mjs";
+import { getParameter } from './get-parameter.mjs';
+import { setMemory } from './set-memory.mjs';
 
 export const multiply = {
   name: 'multiply',

@@ -5,7 +5,7 @@ export const print = {
   opcode: 4,
   parameters: 1,
   continueExecution: true,
-  execute: (
+  execute: async (
     memory,
     instructionPointer,
     [outputParameter],
@@ -13,7 +13,9 @@ export const print = {
     getSystemInput,
     writeSystemOutput
   ) => {
-    writeSystemOutput(getParameter(outputParameterMode, memory, outputParameter));
+    await Promise.resolve(
+      writeSystemOutput(getParameter(outputParameterMode, memory, outputParameter))
+    );
     return { instructionPointer: instructionPointer + 2, memory };
   }
 };

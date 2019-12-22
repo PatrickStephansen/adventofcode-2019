@@ -889,13 +889,14 @@ const instructionSet = [
   halt
 ];
 const instructionDefinitions = indexBy('opcode', instructionSet);
-
-for (const testCase of cases) {
-  console.log('next test case, expected output', testCase.expectedOutput);
-  runProgram({
-    memory: testCase.memory,
-    instructionDefinitions,
-    getSystemInput: () => testCase.input,
-    writeSystemOutput: console.log
-  });
-}
+(async () => {
+  for (const testCase of cases) {
+    console.log('next test case, expected output', testCase.expectedOutput);
+    await runProgram({
+      memory: testCase.memory,
+      instructionDefinitions,
+      getSystemInput: () => testCase.input,
+      writeSystemOutput: console.log
+    });
+  }
+})();
