@@ -140,7 +140,10 @@ const runFeedbackAmplifiers = async (instructionDefinitions, phasePermutations, 
   const thrustOutputs = phasePermutations.map(async phaseSettings => {
     let thrust = 0;
     const amplifiers = phaseSettings.map((phase, index) => {
-      let inputBuffer = [phase, thrust];
+      let inputBuffer = [phase];
+      if (index === 0) {
+        inputBuffer.push(thrust);
+      }
       return {
         getSystemInput: async () => {
           while (!(inputBuffer && inputBuffer.length)) {
@@ -160,7 +163,7 @@ const runFeedbackAmplifiers = async (instructionDefinitions, phasePermutations, 
 
     await Promise.all(amplifiers.map(async amplifier => runProgram(amplifier)));
 
-    return amplifiers[amplifiers.length - 1].inputBuffer.shift();
+    return amplifiers[0].inputBuffer.shift();
   });
 
   return probe(
