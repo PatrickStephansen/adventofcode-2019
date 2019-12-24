@@ -21,7 +21,8 @@ export const add = {
       memory,
       resultAddress,
       getParameter(leftParameterMode, memory, leftParameter, relativeBase) +
-        getParameter(rightParameterMode, memory, rightParameter, relativeBase)
+        getParameter(rightParameterMode, memory, rightParameter, relativeBase),
+      relativeBase
     )
   })
 };

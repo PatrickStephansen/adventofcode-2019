@@ -1,3 +1,5 @@
+import { getParameter } from './get-parameter.mjs';
+
 export const relativeBaseOffset = {
   name: 'relative base offset',
   opcode: 9,
@@ -12,7 +14,7 @@ export const relativeBaseOffset = {
     writeSystemOutput,
     relativeBase
   ) => ({
-    relativeBase: relativeBase + offset,
+    relativeBase: relativeBase + getParameter(offsetMode, memory, offset, relativeBase),
     instructionPointer: instructionPointer + 2
   })
 };

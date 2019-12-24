@@ -29,6 +29,12 @@ const instructionSet = indexBy('opcode', [
 ]);
 
 const cases = [
+  { input: [109, 100, 203, 1, 4, 101, 99], expectedOutput: 1 },
+  { input: [9, 0, 203, 1, 4, 10, 99], expectedOutput: 1 },
+  {
+    input: [3, 101, 4, 101, 99],
+    expectedOutput: 1
+  },
   {
     input: [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99],
     expectedOutput: '109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99'
