@@ -1,5 +1,4 @@
-export const setMemory = (memory, index, value) => [
-  ...memory.slice(0, index),
-  value,
-  ...memory.slice(index + 1)
-];
+export const setMemory = (mode, memory, index, value, relativeBase) => {
+  const trueIndex = mode === 2 ? index + relativeBase : index;
+  return [...memory.slice(0, trueIndex), value, ...memory.slice(trueIndex + 1)];
+};

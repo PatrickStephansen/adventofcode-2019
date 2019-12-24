@@ -11,11 +11,18 @@ export const readInput = {
     [saveAddress],
     [saveAddressMode],
     getSystemInput,
-    writeSystemOutput
+    writeSystemOutput,
+    relativeBase
   ) => {
     return {
       instructionPointer: instructionPointer + 2,
-      memory: setMemory(memory, saveAddress, await Promise.resolve(getSystemInput()))
+      memory: setMemory(
+        saveAddressMode,
+        memory,
+        saveAddress,
+        await Promise.resolve(getSystemInput()),
+        relativeBase
+      )
     };
   }
 };

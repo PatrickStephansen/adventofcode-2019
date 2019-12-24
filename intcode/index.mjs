@@ -8,3 +8,4 @@ export { jumpIfTrue } from './jump-if-true.mjs';
 export { jumpIfFalse } from './jump-if-false.mjs';
 export { lessThan } from './less-than.mjs';
 export { equals } from './equals.mjs';
+export { relativeBaseOffset } from './relative-base-offset.mjs';

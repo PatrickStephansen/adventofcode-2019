@@ -10,16 +10,18 @@ export const add = {
     memory,
     instructionPointer,
     [leftParameter, rightParameter, resultAddress],
-    [leftParameterMode, rightParameterMode],
+    [leftParameterMode, rightParameterMode, resultMode],
     getSystemInput,
-    writeSystemOutput
+    writeSystemOutput,
+    relativeBase
   ) => ({
     instructionPointer: instructionPointer + 4,
     memory: setMemory(
+      resultMode,
       memory,
       resultAddress,
-      getParameter(leftParameterMode, memory, leftParameter) +
-        getParameter(rightParameterMode, memory, rightParameter)
+      getParameter(leftParameterMode, memory, leftParameter, relativeBase) +
+        getParameter(rightParameterMode, memory, rightParameter, relativeBase)
     )
   })
 };

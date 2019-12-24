@@ -10,18 +10,21 @@ export const equals = {
     memory,
     instructionPointer,
     [leftOperand, rightOperand, resultAddress],
-    [leftOperandMode, rightOperandMode],
+    [leftOperandMode, rightOperandMode, resultMode],
     getSystemInput,
-    writeSystemOutput
+    writeSystemOutput,
+    relativeBase
   ) => ({
     instructionPointer: instructionPointer + 4,
     memory: setMemory(
+      resultMode,
       memory,
       resultAddress,
       +(
-        getParameter(leftOperandMode, memory, leftOperand) ===
-        getParameter(rightOperandMode, memory, rightOperand)
-      )
+        getParameter(leftOperandMode, memory, leftOperand, relativeBase) ===
+        getParameter(rightOperandMode, memory, rightOperand, relativeBase)
+      ),
+      relativeBase
     )
   })
 };

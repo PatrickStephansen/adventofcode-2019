@@ -11,11 +11,11 @@ export const jumpIfTrue = {
     [conditionParameter, jumpAddress],
     [conditionParameterMode, jumpAddressMode],
     getSystemInput,
-    writeSystemOutput
+    writeSystemOutput,
+    relativeBase
   ) => ({
-    memory,
-    instructionPointer: getParameter(conditionParameterMode, memory, conditionParameter)
-      ? getParameter(jumpAddressMode, memory, jumpAddress)
+    instructionPointer: getParameter(conditionParameterMode, memory, conditionParameter, relativeBase)
+      ? getParameter(jumpAddressMode, memory, jumpAddress, relativeBase)
       : instructionPointer + 3
   })
 };

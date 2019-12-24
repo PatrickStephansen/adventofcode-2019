@@ -11,7 +11,8 @@ export const runProgram = async machineState => {
     writeSystemOutput,
     instructionPointer = 0,
     memory,
-    instructionDefinitions
+    instructionDefinitions,
+    relativeBase = 0
   } = machineState;
   const instructionCode = memory[instructionPointer];
   const opcode = extractOpcode(instructionCode);
@@ -31,7 +32,8 @@ export const runProgram = async machineState => {
         parameters,
         parameterModes,
         getSystemInput,
-        writeSystemOutput
+        writeSystemOutput,
+        relativeBase
       )
     ))
   });

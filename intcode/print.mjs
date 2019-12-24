@@ -11,11 +11,12 @@ export const print = {
     [outputParameter],
     [outputParameterMode],
     getSystemInput,
-    writeSystemOutput
+    writeSystemOutput,
+    relativeBase
   ) => {
     await Promise.resolve(
-      writeSystemOutput(getParameter(outputParameterMode, memory, outputParameter))
+      writeSystemOutput(getParameter(outputParameterMode, memory, outputParameter, relativeBase))
     );
-    return { instructionPointer: instructionPointer + 2, memory };
+    return { instructionPointer: instructionPointer + 2 };
   }
 };
