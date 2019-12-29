@@ -1,21 +1,17 @@
 import { probe } from './probe.mjs';
-import {
-  toCoordinateList,
-  interpretMap,
-  toPolarCoordinates,
-  closeEnough
-} from './asteroid-detection.mjs';
+import { toCoordinateList, interpretMap, countVisibleAsteroids } from './asteroid-detection.mjs';
 import { input as asteroidMap } from './10-input.mjs';
+import {} from './asteroid-detection.mjs';
 
 const cases = [
-  //   {
-  //     input: `.#..#
-  // .....
-  // #####
-  // ....#
-  // ...##`,
-  //     expectedOutput: 8
-  //   },
+  {
+    input: `.#..#
+  .....
+  #####
+  ....#
+  ...##`,
+    expectedOutput: 8
+  },
   {
     input: `......#.#.
 #..#.#....
@@ -82,21 +78,7 @@ const cases = [
 ];
 
 const countAsteroidsVisibleFromBestLocation = asteroidMap =>
-  Math.max(
-    ...toCoordinateList(interpretMap(asteroidMap)).map((origin, originIndex, asteroids) =>
-      asteroids
-        .filter((_, index) => index !== originIndex)
-        .map(asteroid => toPolarCoordinates(origin, asteroid))
-        .sort((a, b) => b.radians - a.radians)
-        .reduce(
-          (count, asteroid, index, otherAsteroids) =>
-            closeEnough((otherAsteroids[index + 1] || { radians: 1000 }).radians, asteroid.radians)
-              ? count
-              : count + 1,
-          0
-        )
-    )
-  );
+  Math.max(...toCoordinateList(interpretMap(asteroidMap)).map(countVisibleAsteroids));
 
 for (const testCase of cases) {
   probe(
