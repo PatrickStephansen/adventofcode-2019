@@ -51,7 +51,9 @@ export const runPainterProgram = async (
   painterProgram
 ) => {
   const getCurrentPanelColour = () =>
-    pallette.findIndex(c => c === getPanelColour(paintedPanels, robotLocation, pallette));
+    pallette.findIndex(
+      c => c === getPanelColour(paintedPanels, robotLocation.coordinates, pallette)
+    );
   const executeRobotCommand = command => {
     if (nextInstructionIsDirection) {
       robotLocation = moveRobot(directions, command, robotLocation);
