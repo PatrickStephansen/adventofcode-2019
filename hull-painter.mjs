@@ -2,7 +2,10 @@ import { runProgram } from './intcode/index.mjs';
 
 export const rotateDirection = (currentDirection, rotationDirection, directions) =>
   directions[
-    (directions.findIndex(d => d === currentDirection) + rotationDirection) % directions.length
+    (directions.findIndex(d => d === currentDirection) +
+      (rotationDirection === 1 ? 1 : -1) +
+      directions.length) %
+      directions.length
   ];
 export const moveInDirection = ({ x, y }, direction) => ({
   x: x + (direction === 'left' ? -1 : direction === 'right' ? 1 : 0),
